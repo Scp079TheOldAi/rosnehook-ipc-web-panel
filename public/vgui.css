@@ -1,43 +1,82 @@
-
 .vgui-font {
-    color: #d8dfd3;
-
-    font-family: "Tahoma", sans-serif;
-    font-size: 10px;
-
-    font-smooth: none;
-    -webkit-font-smoothing: none;
+    color: var(--text, #edf2e8);
+    font-family: "Segoe UI", system-ui, Tahoma, sans-serif;
+    font-size: 13px;
 }
 
 input {
     text-align: left;
+    font-family: inherit;
 }
 
-input:not([type=button]), .vgui-inset {
-    border-bottom: 1px solid #899180;
-    border-right: 1px solid #899180;
-    border-top: 1px solid #282f22;
-    border-left: 1px solid #282f22;
-    background: #3f4737;
-    color: #d8dfd3;
+input:not([type=button]):not([type=checkbox]),
+.vgui-inset {
+    border: 1px solid var(--border-dark, #121612);
+    border-bottom-color: var(--border-light, #5f6d57);
+    border-right-color: var(--border-light, #5f6d57);
+    background: var(--surface, #1e2420);
+    color: var(--text, #edf2e8);
+    border-radius: var(--radius-sm, 5px);
+    transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
-input[type=button]:not(:active), .vgui-outset {
-    border-top: 1px solid #899180;
-    border-left: 1px solid #899180;
-    border-bottom: 1px solid #282f22;
-    border-right: 1px solid #282f22;
-    color: #d8dfd3;
-    background: #4d5844;
+input:not([type=button]):not([type=checkbox]):focus,
+.vgui-inset:focus-within {
+    outline: none;
+    background: var(--surface-hover, #283029);
+    box-shadow: 0 0 0 2px var(--accent-glow, rgba(212, 184, 58, 0.35));
+}
+
+input[type=button]:not(:active),
+.vgui-outset {
+    border: 1px solid transparent;
+    color: var(--text, #edf2e8);
+    background: linear-gradient(180deg, #4a5544 0%, #3b4436 100%);
+    border-radius: var(--radius-sm, 5px);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    transition: filter 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.panel.vgui-outset {
+    border: 1px solid rgba(95, 109, 87, 0.22);
+    background: var(--bg-elevated, #141816);
+}
+
+input[type=button]:hover:not(:active):not([disabled]) {
+    filter: brightness(1.1);
 }
 
 input[type=button]:active {
-    border-bottom: 1px solid #899180;
-    border-right: 1px solid #899180;
-    border-top: 1px solid #282f22;
-    border-left: 1px solid #282f22;
-    background: #3f4737;
-    color: #d8dfd3;
+    transform: translateY(1px);
+    filter: brightness(0.95);
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, #c9ad3f 0%, #9a8228 100%) !important;
+    color: #1a1a14 !important;
+    box-shadow: 0 2px 10px var(--accent-glow, rgba(212, 184, 58, 0.35)) !important;
+}
+
+.btn-primary:hover:not(:active):not([disabled]) {
+    filter: brightness(1.06);
+}
+
+.btn-success {
+    background: linear-gradient(180deg, #5f9f52 0%, #467a3c 100%) !important;
+    box-shadow: 0 2px 8px var(--success-soft, rgba(126, 207, 106, 0.14)) !important;
+}
+
+.btn-danger {
+    background: linear-gradient(180deg, #c95659 0%, #9a3f42 100%) !important;
+    box-shadow: 0 2px 8px var(--danger-soft, rgba(224, 90, 93, 0.14)) !important;
+}
+
+.btn-neutral {
+    background: linear-gradient(180deg, #4f5a4a 0%, #3a4338 100%) !important;
 }
 
 .vgui-container {
@@ -48,139 +87,277 @@ input[type=button]:active {
 .vgui-select {
     display: block;
     min-width: 8em;
-    padding: 3px;
-    padding-right: 16px;
-    border-bottom: 1px solid #899180;
-    border-right: 1px solid #899180;
-    border-top: 1px solid #282f22;
-    border-left: 1px solid #282f22;
-    background: url('vgui-dropdown.png') #3f4737 no-repeat right 2px center;
-    color: #d8dfd3;
+    padding: 7px 30px 7px 10px;
+    border: 1px solid var(--border-dark, #121612);
+    border-bottom-color: var(--border-light, #5f6d57);
+    border-right-color: var(--border-light, #5f6d57);
+    background: url('vgui-dropdown.png') var(--surface, #1e2420) no-repeat right 8px center;
+    color: var(--text, #edf2e8);
+    border-radius: var(--radius-sm, 5px);
 }
 
-.vgui-select-hidden {
-    display: none;
-}
+.vgui-select-hidden { display: none; }
 
-.vgui-select-container {
-    position: relative;
-}
+.vgui-select-container { position: relative; }
 
 .vgui-select-list {
     display: block;
     overflow: hidden;
-    margin: 0;
+    margin: 2px 0 0;
     box-sizing: border-box;
     width: 100%;
     position: absolute;
     top: 100%;
     left: 0;
     list-style: none;
-    z-index: 3;
+    z-index: 5;
     padding: 0;
-    margin-top: 2px;
+    border-radius: var(--radius-sm, 5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
 }
 
 .vgui-select-option {
-    padding: 3;
+    padding: 7px 10px;
     width: 100%;
 }
 
 .vgui-select-option:hover {
-    background: #958831;
+    background: var(--accent-soft, rgba(212, 184, 58, 0.14));
 }
 
 ::selection {
-    background: rgba(149, 136, 49, 0.996);
+    background: rgba(212, 184, 58, 0.5);
     color: white;
 }
 
 .vgui-table {
-    font-size: 10px;
+    width: max-content;
+    min-width: 100%;
+    font-size: 11px;
     border-collapse: separate;
-    border-spacing: 0px;
+    border-spacing: 0;
+}
+
+.vgui-table tr.table-header td {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    padding: 9px 11px;
+    min-width: 3.2em;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+    color: var(--text-muted, #9eaa96);
+    background: #323b34;
+    border-bottom: 1px solid var(--border-dark, #121612);
+    border-right: 1px solid rgba(0, 0, 0, 0.18);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
 }
 
 .vgui-table td {
-    padding: 2px 6px;
-    min-width: 3em;
+    padding: 8px 11px;
+    min-width: 2.8em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.07);
+    vertical-align: middle;
+    background: inherit;
 }
 
-.vgui-table tbody tr:nth-child(even)
-{
-    background: rgba(0, 0, 0, 0.15); 
+.vgui-table tr {
+    transition: background 0.12s ease;
 }
 
-.vgui-table tbody tr:first-child {
-    background: #4d5844;
+.vgui-table tr:nth-child(even):not(.table-header) {
+    background: rgba(0, 0, 0, 0.14);
 }
 
-.vgui-table tbody tr:first-child td {
-    border-top: 1px solid #899180;
-    border-left: 1px solid #899180;
-    border-bottom: 1px solid #282f22;
-    border-right: 1px solid #282f22;
+.vgui-table tr:not(.table-header):hover {
+    background: rgba(212, 184, 58, 0.07) !important;
+}
+
+.vgui-table tr.table-header td.col-group {
+    border-left: 2px solid rgba(212, 184, 58, 0.22);
+}
+
+.vgui-table td.col-group,
+.vgui-table tr:not(.table-header) td:nth-child(6),
+.vgui-table tr:not(.table-header) td:nth-child(12),
+.vgui-table tr:not(.table-header) td:nth-child(17) {
+    border-left: 2px solid rgba(212, 184, 58, 0.12);
+}
+
+.vgui-table tr.table-header td.col-pin--1,
+.vgui-table tr:not(.table-header) td:nth-child(1) {
+    position: sticky;
+    left: var(--pin-col-1);
+    z-index: 3;
+    min-width: 168px;
+    background: var(--surface-pinned, #242b26);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.18);
+}
+
+.vgui-table tr.table-header td.col-pin--1 {
+    z-index: 6;
+    background: #323b34;
+}
+
+.vgui-table tr.table-header td.col-pin--2,
+.vgui-table tr:not(.table-header) td:nth-child(3) {
+    position: sticky;
+    left: var(--pin-col-2);
+    z-index: 3;
+    min-width: 110px;
+    background: var(--surface-pinned, #242b26);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.12);
+}
+
+.vgui-table tr.table-header td.col-pin--2 {
+    z-index: 6;
+    background: #323b34;
+}
+
+.vgui-table tr:not(.table-header):hover td:nth-child(1),
+.vgui-table tr:not(.table-header):hover td:nth-child(3) {
+    background: #2d352f;
+}
+
+.vgui-table .client-actions input[type=button] {
+    margin: 0 3px 3px 0;
+    padding: 5px 9px;
+    min-width: auto;
+    font-size: 10px;
+}
+
+.vgui-table .client-actions input[value="Command"] {
+    background: linear-gradient(180deg, #4d5f7a 0%, #3a4a60 100%) !important;
+}
+
+.vgui-table .client-actions input[value="Restart"] {
+    background: linear-gradient(180deg, #5f9f52 0%, #467a3c 100%) !important;
+}
+
+.vgui-table .client-actions input[value="Terminate"] {
+    background: linear-gradient(180deg, #c95659 0%, #9a3f42 100%) !important;
+}
+
+.vgui-table .client-bot-name {
+    font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--accent, #d4b83a);
+}
+
+.vgui-table .client-name,
+.vgui-table .client-ip,
+.vgui-table .client-map {
+    font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+    font-size: 10px;
+}
+
+.vgui-table .client-state {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+}
+
+.vgui-table .client-status {
+    font-weight: 600;
+    font-size: 10px;
+}
+
+.vgui-table .client-status.error {
+    color: var(--error, #f07167);
+}
+
+.vgui-table .client-status.warning {
+    color: var(--warning, #f0c84b);
+}
+
+.vgui-table .client-team:empty::before,
+.vgui-table .client-team {
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.vgui-table .client-restarts,
+.vgui-table .client-hitrate,
+.vgui-table .client-hsrate,
+.vgui-table .client-score,
+.vgui-table .client-total {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.vgui-table .client-health {
+    font-variant-numeric: tabular-nums;
 }
 
 input:not([type=checkbox]) {
-    padding: 3px;
-    font-size: 10px;
+    padding: 8px 11px;
+    font-size: 12px;
     min-width: 62px;
 }
 
-input[type=checkbox]:before {
-    border-bottom: 1px solid #899180;
-    border-right: 1px solid #899180;
-    border-top: 1px solid #282f22;
-    border-left: 1px solid #282f22;
-    background: #3f4737;
+input[type=checkbox] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    vertical-align: middle;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+input[type=checkbox]::before {
+    border: 1px solid var(--border-dark, #121612);
+    border-bottom-color: var(--border-light, #5f6d57);
+    border-right-color: var(--border-light, #5f6d57);
+    background: var(--surface, #1e2420);
     content: "";
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
 }
 
-.vgui-button-centered {
-    text-align: center;
+.vgui-button-centered { text-align: center; }
+
+input[type=checkbox]:checked::before {
+    background: url('vgui-checkbox.png') center center no-repeat var(--surface, #1e2420);
+    background-size: 11px 11px;
+    border-color: var(--accent, #d4b83a);
 }
 
-input[type=checkbox]:checked:before {
-    background: url('vgui-checkbox.png') #3f4737;
-}
-
-[disabled], .vgui-disabled {
-    background: #4b5742 !important;
-    color: #a2ab96 !important;
+[disabled],
+.vgui-disabled {
+    background: #343d36 !important;
+    color: var(--text-dim, #6d776c) !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none !important;
 }
 
 .noselect {
     cursor: default;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
 option:hover {
-    background: #958831;
+    background: var(--accent-soft, rgba(212, 184, 58, 0.14));
 }
 
-*:focus {
-    outline: none;
-}
+*:focus { outline: none; }
 
 hr {
     border: 0;
-    border-top: 1px solid #282f22;
-    border-bottom: 1px solid #899180;
+    border-top: 1px solid var(--border-dark, #121612);
+    border-bottom: 1px solid rgba(95, 109, 87, 0.3);
+    margin: 0;
 }
 
-.nopad {
-    padding: 0;
-}
-
-.vmiddle * {
-    vertical-align: middle;
-}
+.nopad { padding: 0; }
+.vmiddle * { vertical-align: middle; }

@@ -1,71 +1,120 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rosnehook IPC Web Panel</title>
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="vgui.css">
         <script src="bundle.js"></script>
     </head>
-    <body class="vgui-container vgui-font">
-        <h1>Rosnehook IPC Web Panel</h1>
-        <div id="container-login" class="vgui-outset">
-            If you don't see any data, please login using the password shown in console and refresh the page
-            <input id="api-password" type="text" placeholder="Password">
-            <input id="api-login-button" type="button" value="Login">
-        </div>
-        <br>
-        <div id="console-container">
-            <span><input type="text" id="console" placeholder="command for every client" size=64 class="vgui-border-inset"></span>
-            <input type="button" id="console-send" value="Submit" class="vgui-border-out">
-        </div>
-        <br>
-        <div id="status" class="nohighlight">
-            <span>Status: </span><span id="status-text">initializing</span>
-        </div>
-        <div>
-            <input type="button" id="bot-restartall" value="Restart all"> <input type="button" id="bot-terminateall" value="Terminate all"> <input type="button" id="bot-refresh" value="Refresh bot list"> <input id="bot-quota" value="3"> <input id="bot-quota-apply" type="button" value="Apply quota">
-        </div>
-        <br>
-        <div id="table-container">
-            <table id="clients" class="vgui-table vgui-inset">
-                <tr>
-                    <td>Actions</td>
-                    <td>Restarts</td>
-                    <td>Bot Name</td>
-                    <td>State</td>
-                    <td>Steam</td>
-                    <td>Uptime</td>
-                    <td>PID</td>
-                    <td>ID</td>
-                    <td>IPC Status</td>
-                    <td>Name</td>
-                    <td>Queue</td>
-                    <td>Total Score</td>
-                    <td>Score</td>
-                    <td>Shots</td>
-                    <td>Hit %</td>
-                    <td>Head %</td>
-                    <td>Connected</td>
-                    <td>Alive?</td>
-                    <td>Team</td>
-                    <td>Class</td>
-                    <td>Health</td>
-                    <td>Server IP</td>
-                    <td>Current map</td>
-                    <td>Players</td>
-                    <td>Bots</td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <div class="nopad vmiddle">
-                <input type="checkbox" id="autorestart-bots" checked>Auto-restart nonresponsive bots</input>
-            </div>
-        </div>
-        <div id="footer">
-            <hr>
-            <span class="nohighlight">
-               RosneBurgerworks, 2024 | <a href="https://github.com/rosneburgerworks" target="_blank">github</a>
-            </span>
+    <body class="vgui-font">
+        <div class="page">
+            <header class="page-header">
+                <div class="page-header__brand">
+                    <div class="brand-mark" aria-hidden="true">RH</div>
+                    <div>
+                        <h1>Rosnehook IPC Panel</h1>
+                        <p class="page-header__subtitle">Live bot monitoring &amp; remote control</p>
+                    </div>
+                </div>
+                <div id="status" class="status-badge nohighlight">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-badge__label">Status</span>
+                    <span id="status-text" class="status-badge__value">initializing</span>
+                </div>
+            </header>
+
+            <section id="container-login" class="panel panel--login vgui-outset">
+                <div class="panel__body login-panel">
+                    <div class="login-panel__text">
+                        <strong>Authentication</strong>
+                        <p class="panel__hint">No data? Enter the API password from your server console, then refresh.</p>
+                    </div>
+                    <div class="login-row">
+                        <input id="api-password" type="password" placeholder="API password" autocomplete="current-password">
+                        <input id="api-login-button" type="button" class="btn-primary" value="Login">
+                    </div>
+                </div>
+            </section>
+
+            <section class="command-deck">
+                <div class="panel panel--toolbar vgui-outset">
+                    <div class="panel__header">Fleet controls</div>
+                    <div class="panel__body toolbar">
+                        <div class="toolbar__group">
+                            <input type="button" id="bot-restartall" class="btn-success" value="Restart all" title="Restart every running bot">
+                            <input type="button" id="bot-terminateall" class="btn-danger" value="Terminate all" title="Stop every bot process">
+                            <input type="button" id="bot-refresh" class="btn-neutral" value="Refresh list" title="Reload bot list from server">
+                        </div>
+                        <div class="toolbar__group toolbar__group--quota">
+                            <label class="toolbar__label" for="bot-quota">Max bots</label>
+                            <input id="bot-quota" type="text" value="3" inputmode="numeric" title="Maximum concurrent bots">
+                            <input id="bot-quota-apply" type="button" class="btn-primary" value="Apply quota">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel--console vgui-outset">
+                    <div class="panel__header">Broadcast command</div>
+                    <div id="console-container" class="panel__body console-row">
+                        <input type="text" id="console" placeholder="Type a command — sent to every connected client (Enter to submit)" size="64">
+                        <input type="button" id="console-send" class="btn-primary" value="Send">
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel panel--table vgui-outset">
+                <div class="panel__header panel__header--table">
+                    <span>Bot instances</span>
+                    <span class="panel__header-hint">Scroll horizontally · Actions &amp; name stay pinned</span>
+                </div>
+                <div id="table-container" class="panel__body table-scroll">
+                    <table id="clients" class="vgui-table vgui-inset">
+                        <tr class="table-header">
+                            <td class="col-pin col-pin--1">Actions</td>
+                            <td>Restarts</td>
+                            <td class="col-pin col-pin--2">Bot Name</td>
+                            <td>State</td>
+                            <td>Steam</td>
+                            <td class="col-group">Uptime</td>
+                            <td>PID</td>
+                            <td>ID</td>
+                            <td>IPC Status</td>
+                            <td>Name</td>
+                            <td>Queue</td>
+                            <td class="col-group">Total Score</td>
+                            <td>Score</td>
+                            <td>Shots</td>
+                            <td>Hit %</td>
+                            <td>Head %</td>
+                            <td class="col-group">Connected</td>
+                            <td>Alive?</td>
+                            <td>Team</td>
+                            <td>Class</td>
+                            <td>Health</td>
+                            <td>Server IP</td>
+                            <td>Current map</td>
+                            <td>Players</td>
+                            <td>Bots</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <section class="bottom-bar panel vgui-outset">
+                <div class="panel__body bottom-bar__inner">
+                    <label class="checkbox-label vmiddle" for="autorestart-bots">
+                        <input type="checkbox" id="autorestart-bots" checked>
+                        <span>Auto-restart bots that stop responding to IPC</span>
+                    </label>
+                    <footer id="footer" class="page-footer">
+                        <span class="nohighlight">
+                            Rosnehook &middot; 202x &middot; <a href="https://github.com/Scp079TheOldAi" target="_blank" rel="noopener noreferrer">@Scp079TheOldAi</a>
+                        </span>
+                    </footer>
+                </div>
+            </section>
         </div>
     </body>
 </html>
