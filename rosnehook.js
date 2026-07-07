@@ -2,9 +2,9 @@ const child_process = require('child_process');
 const EventEmitter = require('events');
 const extend = require('extend');
 
-const CONSOLE_PATH = '/opt/cathook/ipc/bin/console';
+const CONSOLE_PATH = '/opt/rosnehook/ipc/bin/console';
 
-class CathookConsole extends EventEmitter {
+class RosnehookConsole extends EventEmitter {
     constructor() {
         super();
         var self = this;
@@ -13,7 +13,7 @@ class CathookConsole extends EventEmitter {
         this.process.on('exit', function (code) {
             self.init = false;
             self.emit('exit');
-            console.log('[!] cathook console exited with code', code);
+            console.log('[!] rosnehook console exited with code', code);
         });
         var buff = '';
         this.process.stdout.on('data', function (data) {
@@ -53,4 +53,4 @@ class CathookConsole extends EventEmitter {
     }
 }
 
-module.exports = CathookConsole;
+module.exports = RosnehookConsole;

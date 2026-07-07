@@ -1,4 +1,4 @@
-const CathookConsole = require('./cathook');
+const RosnehookConsole = require('./rosnehook');
 const express = require('express');
 const bodyparser = require('body-parser');
 const path = require('path');
@@ -10,7 +10,7 @@ const PORT = 8081;
 
 const npid = require('npid');
 try {
-    const pid = npid.create('/tmp/ncat-cathook-webpanel.pid', true);
+    const pid = npid.create('/tmp/ncat-rosnehook-webpanel.pid', true);
     pid.removeOnExit();
 }
 catch (error) {
@@ -37,7 +37,7 @@ const basicAuth = new SimpleAuth(app);
 console.log('Login with password', basicAuth.password);
 fs.writeFileSync('/tmp/cat-webpanel-password', basicAuth.password);
 
-const cc = new CathookConsole();
+const cc = new RosnehookConsole();
 
 var forever = new Forever(app, cc);
 

@@ -299,7 +299,7 @@ class Bot extends EventEmitter {
         this.restarts++;
 
         var filename = `/tmp/.gl${makeid(6)}`;
-        fs.copyFileSync("/opt/cathook/bin/libcathook-textmode.so", filename);
+        fs.copyFileSync("/opt/rosnehook/bin/librosnehook-textmode.so", filename);
 
         clearSourceLockFiles();
 
